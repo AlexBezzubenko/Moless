@@ -4,12 +4,15 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.ObjectModel;
+using MoreLess.Models;
 
 namespace MoreLess.Models
 {
 
     public class Lot
     {
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
         [Required]
         public long Id { get; set; }
 

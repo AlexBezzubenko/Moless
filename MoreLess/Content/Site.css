@@ -7,6 +7,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    max-width:100%;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -16,9 +17,61 @@
     white-space: normal;
 }
 
+.jumbotron {
+    background: #000 url("Images/jumbotron_bg.jpg") no-repeat center center;
+    background-size: 100% 100%;
+    padding:10px;
+    margin:10px;
+    margin-left:17vw;
+    height:250px;
+    color: #FFF; 
+}
+
+
+#lot_item:hover { 
+    border: 1px solid black; /* Параметры границы */
+}
+  
+#footer {
+    margin-left:35vw;
+    margin-top:100vw;
+    
+}
+.container {
+    margin-left:0;
+    margin-right:0;
+    padding:0;
+}
+#category{
+    position:fixed;
+    margin-top:-260px;
+    background-color:#e6ffff;
+ 
+    width:15vw;
+    height:100%;
+}
+#lots{
+    position:absolute;
+    width:80vw;
+    margin-left:17vw;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
 }
+
+#dropzoneForm {
+        background: gray;
+        border: black dashed 3px;
+        width: 23%;
+        margin-left:17%;
+        padding: 50px;
+        
+        text-align: center;
+        color: blue;
+        font-family:Verdana;
+    }
+

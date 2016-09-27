@@ -1,0 +1,44 @@
+﻿/*p {
+    font-size: 30px;
+}*/
+
+
+#container {
+    margin-left:9%;
+    width: 80vw;
+    height:50vw;
+    border: 1px solid;
+}
+
+#view_lot_image {
+    margin-top: 0;
+    margin-left: 10vw;
+    width: 20vw;
+    height: 20vw;
+    position: absolute;
+}
+
+#view_lot_price_and_bits {
+	margin-left: 40vw;
+	margin-top: -5vw;
+    width: 30vw;
+    height: 20vw;
+    position: absolute;
+}
+
+#view_lot_description {
+    margin-top: 25vw;
+    width:50vw;
+    position: absolute;
+}
+
+ 
+
+ 
+
+ 
+
+
+
+
+

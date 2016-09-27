@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Moless";
+    List<MoreLess.Models.Lot> lots = new List<MoreLess.Models.Lot>(Model);
+    int amount = lots.Count;
 }
 
 <div class="jumbotron">
@@ -10,21 +12,60 @@
     <p><a href="Home/PutUpLot" class="btn btn-primary btn-lg">Put up&raquo;</a></p>
 </div>
 
-
 <div class="container">
-    <div class="row">
-        @foreach (var lot in Model)
+    <div id="category">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active">@Html.ActionLink("Category", "Index", "Home")</li>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+        </ul>
+    </div>
+    <div id="lots">
+        @for (int i = 0; i < Math.Ceiling(amount / 4.0); i++)
         {
-            <div class="col-md-3">
-                <h2>@lot.Title</h2>
-                <img src="http://res.cloudinary.com/dyuwhmiwj/image/upload/v1474217285/wgn3aeyellukku5ge6jl.jpg" style="width:200px; height:200px" />
-                <p>@lot.Category</p>
-                <p>@lot.CurrentPrice</p>
-                <p>@lot.Description</p>
-                <p>@lot.StartedTime</p>
+            <div class="row">
+                @for (int j = 0; j < 4; j++)
+                {
+                    if (i * 4 + j > amount - 1)
+                    {
+                        break;
+                    }
+                    var lot = lots[i * 4 + j];
+                    <div class="col-md-3" id="lot_item">
+                        <a href="@Url.Action("ViewLot", "Home", new { id = lot.Id })">
+                            <h2>@lot.Title</h2>
+                            <img src="@lot.ImageUrl" id="index_lot_image" style="width: 20vw; height : 20vw; max-height: 100%; max-width: 100%;" />                        
+                        </a>
+                        <p>@lot.CurrentPrice</p>                   
+                        <p>Live Auction: @lot.StartedTime</p>
+                    </div>
+                }
             </div>
         }
     </div>
 </div>
+
+
+    
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        var image = document.getElementById('index_lot_image');
+        image.onerror = function () {
+            alert('error loading ' + this.src);
+            this.src = 'Content / Images / jumbotron_bg.jpg';
+        };
+
+    </script>
+}
 
 

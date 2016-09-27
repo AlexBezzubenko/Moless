@@ -1,0 +1,48 @@
+﻿@model MoreLess.Models.Lot
+
+@{
+    ViewBag.Title = "ViewLot";
+    <link rel="stylesheet" type="text/css" href="~/Content/viewlot.css" />
+}
+
+
+<div id="container">
+    <h2>@Model.Title</h2>
+    <br />
+    <p>@Model.Category</p>
+    <br />
+    <div id="view_lot_image">
+        <img src="@Model.ImageUrl" style="width:300px; height:300px" />
+    </div>
+    <div id="view_lot_price_and_bits">
+        <h3>
+            <span class="pull-right label label-primary">@Model.CurrentPrice</span>
+        </h3>
+        <span class="lead" style="padding:0">
+            @Model.StartedTime.DayOfWeek
+            @Model.StartedTime.Day
+            @Model.StartedTime.ToString("MMMM", new System.Globalization.CultureInfo("en-GB"))
+            @Model.StartedTime.Year
+            @Model.StartedTime.ToString("H:mm")
+        </span>
+        
+    </div>
+
+
+
+    <div id="view_lot_description">
+        @if (@Model.ApplicationUser != null)
+        {
+        <p>@Model.ApplicationUser.Email</p>
+        <p>@Model.ApplicationUser.Id</p>
+        <p>@Model.ApplicationUser.UserName</p>
+        foreach (var r in Model.ApplicationUser.Roles)
+        {
+            <p>@r</p>
+        }
+        }
+       
+        <p>@Model.Description</p>
+    </div>
+</div>
+

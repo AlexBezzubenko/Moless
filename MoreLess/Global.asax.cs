@@ -14,7 +14,7 @@ namespace MoreLess
     {
         protected void Application_Start()
         {
-            //Database.SetInitializer(new AuctionDbInitializer());
+            //Database.SetInitializer<ApplicationDbContext>(new AppDbInitializer());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

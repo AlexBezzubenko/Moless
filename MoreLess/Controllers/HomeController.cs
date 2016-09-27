@@ -6,27 +6,28 @@ using System.Web.Mvc;
 using MoreLess.Models;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using System.Data.Entity.Validation;
+using System.Data.Entity.Infrastructure;
+
+using System.Data.Entity;
+using System.Net;
+using Microsoft.AspNet.Identity;
 
 namespace MoreLess.Controllers
 {
     public class HomeController : Controller
     {
-        AuctionContext db = new AuctionContext();
+        ApplicationDbContext db = new ApplicationDbContext();
 
         public ActionResult Index()
         {
-            /*Account account = new Account(
-                "dyuwhmiwj",
-                "172611582566755",
-                "nCtCFnTMqdT4sT_v3eYL2G9lmlk");
-            Cloudinary cloudinary = new Cloudinary(account);
-            var uploadParams = new ImageUploadParams()
-            {
-                File = new FileDescription(@"http://www.avatar-mix.ru/avatars_low_200x200/1431.jpg")
-            };
-            var uploadResult = cloudinary.Upload(uploadParams);*/
+            var currentUserId = User.Identity.GetUserId();
+
+            //IEnumerable<Lot> userLots = db.Lots.Include(x => x.ApplicationUser).Where(x => x.ApplicationUser == currentUser);
             
-            return View(db.Lots);
+            //IEnumerable<Lot> lots = db.Lots.Include(x => x.ApplicationUser);
+
+            return View(db.Lots.Where(x => x.ApplicationUser.Id == currentUserId).Include(x=>x.ApplicationUser));
         }
 
         public ActionResult About()
@@ -43,73 +44,78 @@ namespace MoreLess.Controllers
             return View();
         }
 
-
+        [Authorize]
         [HttpGet]
         public ActionResult PutUpLot() => View();
 
+        [Authorize]
         [HttpPost]
         public ActionResult PutUpLot(Lot lot)
         {
+            //string currentUserId = User.Identity.GetUserId();
+            //ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+
+            var currentUser = db.Users.Find(User.Identity.GetUserId());
+            //var userBlogs = db.Blogs.Where(x => x.ApplicationUser == currentUser);
+
+            lot.ApplicationUser = currentUser;
             db.Lots.Add(lot);
             db.SaveChanges();
-
+            
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public ActionResult SaveUploadedFile()
         {
             bool isSavedSuccessfully = true;
-            string fName = "";
+            string ImageUrl = "";
+
             try
             {
-                foreach (string fileName in Request.Files)
+                HttpPostedFileBase file = Request.Files[0];
+                if (file != null)
                 {
-                    HttpPostedFileBase file = Request.Files[fileName];
-                    //Save file content goes here
-                    fName = Guid.NewGuid().ToString(); //file.FileName;
-                    if (file != null && file.ContentLength > 0)
-                    {
-                        /*var originalDirectory =
-                                 new System.IO.DirectoryInfo(
-                                      string.Format("{0}Images\\uploaded", Server.MapPath(@"\")));
-                        string pathString = System.IO.Path.Combine(originalDirectory.ToString(),
-                                                        "imagepath");
-                        var fileName1 = System.IO.Path.GetFileName(file.FileName);
-                        bool isExists = System.IO.Directory.Exists(pathString);
-                        if (!isExists)
-                            System.IO.Directory.CreateDirectory(pathString);
-                        var path = string.Format("{0}\\{1}", pathString, fName);
-                        file.SaveAs(path);*/
-                        var originalDirectory =
-                                 new System.IO.DirectoryInfo(
-                                      string.Format("{0}Images\\uploaded", Server.MapPath(@"\")));
-                        var fileName1 = System.IO.Path.GetFileName(file.FileName);
-                        var path = string.Format("{0}\\{1}", originalDirectory, fName);
-                        
-                        Account account = new Account(
+                    Account account = new Account(
                             "dyuwhmiwj",
                             "172611582566755",
                             "nCtCFnTMqdT4sT_v3eYL2G9lmlk");
-                        Cloudinary cloudinary = new Cloudinary(account);
-                        var uploadParams = new ImageUploadParams()
-                        {
-                            File = new FileDescription(path)
-                        };
-                        var uploadResult = cloudinary.Upload(uploadParams);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            isSavedSuccessfully = false;
-                        }
+                    Cloudinary cloudinary = new Cloudinary(account);
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(System.IO.Path.GetFileName(file.FileName), file.InputStream)
+                    };
+                    var uploadResult = cloudinary.Upload(uploadParams);
+                    ImageUrl = @"http://res.cloudinary.com/dyuwhmiwj/image/upload/v1474217285/" + uploadResult.PublicId + ".jpg";
+                }
+              }
+              catch (Exception ex)
+              {
+                  isSavedSuccessfully = false;
+              }
 
-                        if (isSavedSuccessfully == false)
-                            return Json(new { Message = fName });
-                        else
-                            return Json(new { Message = "Error in saving file" });
-                 }
+              if (isSavedSuccessfully == true)
+                  return Json(new { Message = ImageUrl });
+              else
+                  return Json(new { Message = "Error in saving file" });
+         }
 
+        public ActionResult ViewLot(int? id)
+        {
+
+            //ViewBag.Message = lot.Title;
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Lot lot = db.Lots.Find(id);
+            if (lot == null)
+            {
+                return HttpNotFound();
+            }
+            return View(lot);
+        }
 
     }
 }

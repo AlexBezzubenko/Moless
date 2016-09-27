@@ -20,10 +20,14 @@ namespace MoreLess.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Bid> Bids { get; set; }
+        public DbSet<Lot> Lots { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
 
         public static ApplicationDbContext Create()
         {

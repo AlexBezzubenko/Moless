@@ -25,6 +25,10 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("О программе", "About", "Home")</li>
                     <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+                    @if (this.User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Database", "Contact", "Home")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -32,10 +36,7 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
-        </footer>
+        
     </div>
 
     @Scripts.Render("~/bundles/jquery")
