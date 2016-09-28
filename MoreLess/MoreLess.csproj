@@ -210,9 +210,14 @@
     <Compile Include="Migrations\201609262140057_migration.Designer.cs">
       <DependentUpon>201609262140057_migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609280939361_migration1.cs" />
+    <Compile Include="Migrations\201609280939361_migration1.Designer.cs">
+      <DependentUpon>201609280939361_migration1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Bid.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lot.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -298,6 +303,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201609262140057_migration.resx">
       <DependentUpon>201609262140057_migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609280939361_migration1.resx">
+      <DependentUpon>201609280939361_migration1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

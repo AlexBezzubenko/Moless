@@ -23,6 +23,9 @@ namespace MoreLess.Models
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Lot> Lots { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

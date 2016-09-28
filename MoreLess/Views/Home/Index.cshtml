@@ -4,6 +4,7 @@
     ViewBag.Title = "Moless";
     List<MoreLess.Models.Lot> lots = new List<MoreLess.Models.Lot>(Model);
     int amount = lots.Count;
+    List<MoreLess.Models.Category> categories = new List<MoreLess.Models.Category>(ViewBag.categories);
 }
 
 <div class="jumbotron">
@@ -17,15 +18,31 @@
         <ul class="nav nav-pills nav-stacked">
             <li class="active">@Html.ActionLink("Category", "Index", "Home")</li>
             <li>@Html.ActionLink("About", "About", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">More options</a>
+                <ul class="nav nav-pills nav-stacked dropdown-menu">
+                    <li><a tabindex="-1" href="#">Second level</a></li>
+                    <li class="dropdown-submenu">
+                        <a href="#">More..</a>
+                        <ul class="nav nav-pills nav-stacked dropdown-menu">
+                            @foreach (var cat in categories)
+                            {
+                                foreach (var cat2 in cat.Subcategories)
+                                {
+                                    <li><a href="#">@cat2.Title</a></li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                    <li><a href="#">Second level</a></li>
+                    <li><a href="#">Second level</a></li>
+                </ul>
+            </li>
+             
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>          
         </ul>
+
+        
     </div>
     <div id="lots">
         @for (int i = 0; i < Math.Ceiling(amount / 4.0); i++)

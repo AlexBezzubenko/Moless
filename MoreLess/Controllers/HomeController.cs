@@ -24,8 +24,10 @@ namespace MoreLess.Controllers
             var currentUserId = User.Identity.GetUserId();
 
             //IEnumerable<Lot> userLots = db.Lots.Include(x => x.ApplicationUser).Where(x => x.ApplicationUser == currentUser);
-            
+
             //IEnumerable<Lot> lots = db.Lots.Include(x => x.ApplicationUser);
+
+            ViewBag.categories = db.Categories;
 
             return View(db.Lots.Where(x => x.ApplicationUser.Id == currentUserId).Include(x=>x.ApplicationUser));
         }

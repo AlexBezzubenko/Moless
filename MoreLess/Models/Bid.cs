@@ -10,12 +10,11 @@ namespace MoreLess.Models
     {
         public long Id { get; internal set; }
 
-        public long AuctionId { get; set; }
-
         [Required]
         public DateTime Timestamp { get; set; }
 
-        public string Username { get; set; }
+        [Required]
+        public virtual ApplicationUser user { get; set; }
 
         [Range(1, double.MaxValue)]
         public decimal Amount { get; set; }

@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.ObjectModel;
-using MoreLess.Models;
 
 namespace MoreLess.Models
 {
-
     public class Lot
     {
         public virtual ApplicationUser ApplicationUser { get; set; }
@@ -18,7 +13,7 @@ namespace MoreLess.Models
 
         [Required]
         [DataType(DataType.Text)]
-        public string Category { get; set; }
+        public virtual Category Category { get; set; }
 
         [Required]
         [DataType(DataType.Text)]

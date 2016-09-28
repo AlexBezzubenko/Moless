@@ -4,6 +4,8 @@ using Owin;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MoreLess.Models;
+using System.Data.Entity;
+using System.Linq;
 
 [assembly: OwinStartupAttribute(typeof(MoreLess.Startup))]
 namespace MoreLess
@@ -41,10 +43,25 @@ namespace MoreLess
                 userManager.AddToRole(admin.Id, role1.Name);
                 userManager.AddToRole(admin.Id, role2.Name);
             }
-            
+
+            Category category1 = new Category();
+            Category category2 = new Category();
+            Category category3 = new Category();
+            category1.Title = "SomeCat";
+            category2.Title = "someSubCat1";
+            category3.Title = "someSubCat2";
+
+            context.Categories.Add(category1);
+            context.Categories.Add(category2);
+            context.Categories.Add(category3);
+
+
+            category1.Subcategories.Add(category2);
+            category1.Subcategories.Add(category3);
+
 
             context.SaveChanges();
-            
+
         }
     }
 }
